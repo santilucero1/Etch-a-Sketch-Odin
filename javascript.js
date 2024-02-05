@@ -1,133 +1,88 @@
-//basic operations
-
-function add (a,b) {
-    return a+b;
-}
-
-function subtract (a,b) {
-    return a-b;
-}
-
-function multiply (a,b){
-    return a*b;
-}
-
-function divide (a,b) {
-    return a/b;
-}
-
-//variables
-
-let a ="";
-let b ="";
-let o =""; //number 1, number 2, operator
-
-function operate (a,b,o) {
-    if(o=="+"){
-        add(a,b)
-    }
-
-    else if (o=="-"){
-        subtract(a,b)
-    }
-
-    else if (o=="*"){
-        multiply(a,b)
-    }
-
-    else if (o=="/"){
-        divide(a,b)
-    }
-}
-
-
-let arrayN = []
-let inputA = true;
-let result;
-var pElement = document.querySelector('.pdisplay');
+const container = document.querySelector(".grid");
+var isMouseDown = false;
+const rainbow = document.querySelector(".rainbow")
+var isRainbow = false;
+const pencil = document.querySelector(".pencil");
+const restart = document.querySelector(".restart")
 
 
 
-document.addEventListener("click", (e) =>{
+      // Create the grid
+      for (var i = 0; i < 16; i++) {
+        for (var j = 0; j < 16; j++) {
+          //capture the values of i and j
+          (function(rowIndex, colIndex) {
+            // Crete a celd
+            var cell = document.createElement('div');
+            cell.className = 'cell';
 
-    if (e.target.tagName === 'BUTTON') {
-        if(inputA){
-            
-            //if press any operator
-            if (['+', '-', '*', '/', '='].includes(e.target.innerText)){
-        
-                o = e.target.innerText; //get operation
-                pElement.textContent = a+o
-                inputA = false; //next input
-            }
+            // Add the event listener to each cell and check if the mouse is down,up or moving.
+            cell.addEventListener('mousedown', function() {
+              console.log('Clic en la casilla ' + (rowIndex + 1) + 'x' + (colIndex + 1));
+              isMouseDown = true;
+              //call the state function
+              state(cell);
+              //cell.classList.add("black")
+            });
 
-            else if (e.target.innerText == "C"){
-                a= a.slice(0, -1);
-                pElement.textContent = a;
-            }
+            cell.addEventListener("mouseup",function(){
+                isMouseDown=false;
+            })
 
-            else {
-                
-            a = a+ e.target.innerText //concatenate
-            pElement.textContent = a;
-            //console.log(a)
-            }
-            
-        
+            cell.addEventListener("mousemove",function(){
+                if(isMouseDown==true){
+                  state(cell);
+                }
+            })
+
+            // Add the cell to the container
+            container.appendChild(cell);
+
+          })(i, j); //call the function 
+        }
+        container.appendChild(document.createElement('br')); //to remove the line jump
+      }
+
+      function state(cell){
+
+        if (isRainbow) {
+          var color = generateRandomColor();
+
+          cell.style.backgroundColor = color;
         }
 
-        else{
-
-            //if press any operator
-            if (['+', '-', '*', '/', '='].includes(e.target.innerText)){
-                
-                //convert a and b to int
-                a = parseInt(a)
-                b = parseInt(b)
-
-                //make the operations
-                switch (o) {
-
-                    case "+":
-                    result = add(a, b);
-                    console.log(result, "add");
-                    break;
-
-                    case "-":
-                    result = subtract(a, b);
-                    console.log(result, "substract");
-                    break;
-
-                    case "/":
-                    result = divide(a, b);
-                    console.log(result, "divide");
-                    break;
-
-                    case "*":
-                    result = multiply(a, b);
-                    console.log(result, "multiply");
-                    break;
-                    }
-                    
-            
-                o = e.target.innerText; //get operation
-                a = result;
-                b = "";
-            }
-
-            else if (e.target.innerText == "C") {
-
-                b= b.slice(0, -1);
-                pElement.textContent = b;
-            }
-            
-            else {
-                b = b+ e.target.innerText //concatenate 
-                console.log(b)}
-                pElement.textContent = (a+o+b).replace('=', '');
-            }
+        else {
+          cell.classList.add("black")
         }
-}
-)
-//the numbers pressed will be saved in one array once at time
-//then need to convert to string with Join method
+
+      }
+
+      rainbow.addEventListener("click", function() {
+        isRainbow = true;
+        console.log("rainbow is true")
+      })
+
+      pencil.addEventListener("click", function() {
+        isRainbow = false;
+        console.log("rainbow is false")
+      })
+
+      function generateRandomColor() {
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+    
+        // Convert to hexadecimal value
+        var Hcolor = "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    
+        return Hcolor;
+    }
+    
+    function componentToHex(component) {
+        var hex = component.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    restart.addEventListener("click",function (){
+      window.location.reload();
+    })

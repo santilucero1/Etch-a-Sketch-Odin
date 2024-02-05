@@ -1,6 +1,5 @@
-
 body {
-
+  
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -9,51 +8,29 @@ body {
     font-style: oblique;
 }
 
-.calculator {
+.grid{
+    font-size: 0; 
+    margin-top: 100px;
+  
+  }
 
-    height: 160px;
-    padding: 16px;
-    background-color:grey;
-    border: solid black 1px;
-}
-.digitline {
-   
-}
-
-.display {
-    background-color:darkseagreen;
-    height: 32px;
-    margin-bottom: 4px;
-    display: flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.pdisplay {
-    margin-left: 8px;
-    color: white;
-    font-size: 16px;
-    
-}
-
-.digits {
-    /* Establece márgenes y rellenos en cero para el contenedor */
-    margin: 0;
-    padding: 0;
-}
-
-.digitline {
-    padding: 0px;
+.cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    display: inline-block;
     margin: 0px;
+    box-sizing: border-box;
+  }
+
+.black {
+    background-color: black;
 }
 
-button {
-    height: 32px ;
-    width: 32px;
-    margin: 0px;
-    padding: 0px;
-    font-family: monospace;
-    font-style: oblique;
-    
+.buttonsDiv {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
 }
 
